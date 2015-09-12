@@ -21,6 +21,7 @@ class MightyEvents_AttendeeController extends BaseController
 		$attendee = new MightyEvents_AttendeeModel();
 		$attendee->name = $data['name'];
 		$attendee->email = $data['email'];
+		$attendee->event_id = $data['event_id'];
 		$attendee->seats = $data['seats'];
 
 		// You need to declare a rules() method in your model for the

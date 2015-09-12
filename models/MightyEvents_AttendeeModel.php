@@ -8,6 +8,7 @@ class MightyEvents_AttendeeModel extends BaseModel
 		return array(
 			array('name', 'required'),
 			array('email', 'required'),
+			array('event_id', 'required'),
 			array('seats', 'required')
 		);
 	}
@@ -17,6 +18,7 @@ class MightyEvents_AttendeeModel extends BaseModel
         return array(
             'name' => AttributeType::String,
             'email' => AttributeType::String,
+            'event_id' => AttributeType::Number,
             'seats' => AttributeType::Number
         );
     }

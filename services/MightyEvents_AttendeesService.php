@@ -24,9 +24,11 @@ class MightyEvents_AttendeesService extends BaseApplicationComponent
 
     public function saveAttendee($model)
     {
+    	// Saving individually because getAttributes() is currently borked ;)
     	$attributes = array(
     		'name' => $model->getAttribute('name'),
     		'email' => $model->getAttribute('email'),
+    		'event_id' => $model->getAttribute('event_id'),
     		'seats' => $model->getAttribute('seats')
 		);
 

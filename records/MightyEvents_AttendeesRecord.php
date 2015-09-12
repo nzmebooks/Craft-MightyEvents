@@ -20,6 +20,10 @@ class MightyEvents_AttendeesRecord extends BaseRecord
 				'type' => AttributeType::Email,
 				'required' => true
 			),
+			'event_id' => array(
+				'type' => AttributeType::Number,
+				'required' => true
+			),
 			'seats' => array(
 				'type' => AttributeType::Number,
 				'required' => true
