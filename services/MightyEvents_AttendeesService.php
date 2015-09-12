@@ -3,6 +3,14 @@ namespace Craft;
 
 class MightyEvents_AttendeesService extends BaseApplicationComponent
 {
+	/**
+	 * Gets all attendees for all events from the database. This is only useful
+	 * in the CP, where you might want to view all attendees across all of your
+	 * events. Return a multidimensional array that's available in the CP.
+	 *
+	 * @method getAttendees
+	 * @return array
+	 */
     public function getAttendees()
     {
     	$query = craft()->db->createCommand()
@@ -22,6 +30,15 @@ class MightyEvents_AttendeesService extends BaseApplicationComponent
         return $data;
     }
 
+    /**
+     * Save an individual attendee to the Attendees table.
+     *
+     * @method saveAttendee
+     * @param object $model An Attendee object.
+     * @return boolean
+     *
+     * TODO : Use getAttributes() to assign values at once when it's fixed.
+     */
     public function saveAttendee($model)
     {
     	// Saving individually because getAttributes() is currently borked ;)
