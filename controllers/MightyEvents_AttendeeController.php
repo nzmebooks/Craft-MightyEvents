@@ -12,6 +12,8 @@ class MightyEvents_AttendeeController extends BaseController
 	 *
 	 * @method actionSaveAttendee
 	 * @return void
+	 *
+	 * TODO : return the model with errors. (Currently non-functional.)
 	 */
     public function actionSaveAttendee()
     {
@@ -37,13 +39,13 @@ class MightyEvents_AttendeeController extends BaseController
 		if ($attendee->validate()) {
 			craft()->mightyEvents_attendees->SaveAttendee($attendee);
 			craft()->userSession->setNotice('Your reservation was successful!');
-		} else {
-			craft()->userSession->setError('Something wasn\'t right about your reservation. Try submitting it again.');
-
-			craft()->urlManager->setRouteVariables(array(
-				'attendee' => $attendee
-			));
+			return;
 		}
+
+		craft()->userSession->setError('Something wasn\'t right about your reservation. Try submitting it again.');
+		craft()->urlManager->setRouteVariables(array(
+			'attendee' => $attendee
+		));
 
 		$this->redirectToPostedUrl();
     }

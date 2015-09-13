@@ -16,4 +16,24 @@ class MightyEventsVariable
 		return craft()->mightyEvents_attendees->getAttendees();
 	}
 
+	public function getPlugin()
+	{
+		return craft()->plugins->getPlugin('mightyEvents');
+	}
+
+	public function getPluginName()
+	{
+		return $this->getPlugin()->getPluginName();
+	}
+
+	public function getPluginUrl()
+	{
+		return $this->getPlugin()->getPluginUrl();
+	}
+
+	public function getPluginVersion()
+	{
+		return $this->getPlugin()->getPluginVersion();
+	}
+
 }

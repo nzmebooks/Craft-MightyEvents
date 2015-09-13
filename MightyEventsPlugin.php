@@ -3,27 +3,42 @@ namespace Craft;
 
 class MightyEventsPlugin extends BasePlugin
 {
-    function getName()
+    public function getName()
     {
          return Craft::t('Mighty Events');
     }
 
-    function getVersion()
+    public function getVersion()
     {
         return '1.0';
     }
 
-    function getDeveloper()
+    public function getDeveloper()
     {
         return 'Taylor Daughtry';
     }
 
-    function getDeveloperUrl()
+    public function getDeveloperUrl()
     {
         return 'http://github.com/taylordaughtry';
     }
 
-    function hasCpSection()
+    public function getPluginName()
+    {
+        return 'Mighty Events';
+    }
+
+    public function getPluginUrl()
+    {
+        return 'https://github.com/taylordaughtry/mightyevents';
+    }
+
+    public function getPluginVersion()
+    {
+        return '0.0.1';
+    }
+
+    public function hasCpSection()
     {
         return true;
     }
