@@ -1,4 +1,9 @@
+![Mighty Events](http://www.taylordaughtry.com/mighty-events-image.png)
+
 # Mighty Events
+
+![Craft](https://img.shields.io/badge/craft-v2.4-orange.svg)
+[![Codacy](https://img.shields.io/badge/code%20quality-A-brightgreen.svg)](https://www.codacy.com/app/hello_10/mightyevents/dashboard)
 
 Mighty Events is a simple module that gives you the ability to track event attendance, as well as communicate with attendees for each event.
 
