@@ -7,12 +7,13 @@ class MightyEvents_EventsService extends BaseApplicationComponent
     public function getEvents()
     {
         $query = craft()->db->createCommand()
-        ->select('mightyevents_events.id, mightyevents_events.name, mightyevents_events.date, mightyevents_attendees.id, mightyevents_attendees.name, mightyevents_attendees.seats, mightyevents_attendees.event_id')
-        ->from('mightyevents_events')
-        ->join('mightyevents_attendees')
+        ->select('event.name AS name, COUNT(attendee.seats) AS attendance, event.date AS date')
+        ->from('mightyevents_events AS event')
+        ->join('mightyevents_attendees AS attendee')
+        ->where('event.id = attendee.event_id')
+        ->group('event.name')
         ->queryAll();
-        print_r($query);
-        die;
+
         return $query;
     }
 

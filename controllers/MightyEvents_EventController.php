@@ -14,8 +14,7 @@ class MightyEvents_EventController extends BaseController
     		} else {
 	    		// Cleanse the data as much as possible
 	    		$encodedValue = mb_convert_encoding($value, 'UTF-8', 'UTF-8');
-	    		$encodedValue = htmlspecialchars($value, ENT_QUOTES);
-	    		$encodedValue = htmlentities($encodedValue);
+	    		$encodedValue = htmlentities($encodedValue, ENT_QUOTES);
 
 	    		$data[$key] = $encodedValue;
 	    	}

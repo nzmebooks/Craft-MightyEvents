@@ -73,16 +73,14 @@
 					<table id="test" class="data fullwidth">
 						<thead>
 							<th>Name</th>
-							<th>Current Attendance</th>
-							<th>Seats Available</th>
+							<th class="thin">Count</th>
 							<th>Date</th>
 						</thead>
 						<tbody>
 							{% for event in events %}
 							<tr>
 								<td>{{ event.name }}</td>
-								<td>{{ event.current_attendance }}</td>
-								<td>{{ event.max_seats }}</td>
+								<td class="thin">{{ event.attendance }}</td>
 								<td>{{ event.date }}</td>
 							</tr>
 							{% endfor %}

@@ -1,7 +1,9 @@
 {% extends "_layouts/cp" %}
 
 {% set title = craft.mightyEvents.getPluginName %}
+
 {% set attendees = craft.mightyEvents.getAttendees %}
+{% set events = craft.mightyEvents.getEvents %}
 
 {% set tabs = craft.mightyEvents.getCpTabs %}
 
@@ -52,17 +54,13 @@
 					<table id="test" class="data fullwidth">
 						<thead>
 							<th>Name</th>
-							<th>Current Attendance</th>
-							<th>Seats Available</th>
-							<th>Date</th>
+							<th class="thin">Count</th>
 						</thead>
 						<tbody>
 							{% for event in events %}
 							<tr>
 								<td>{{ event.name }}</td>
-								<td>{{ event.current_attendance }}</td>
-								<td>{{ event.seats_available }}</td>
-								<td>{{ event.date }}</td>
+								<td class="thin">{{ event.attendance }}</td>
 							</tr>
 							{% endfor %}
 						</tbody>
@@ -77,8 +75,8 @@
 			</div><!-- Body -->
 		</div><!-- Widget -->
 		<div class="widget pane">
-			<h2>Search Members</h2>
-			<p>Search a member by name to find the events they're attending:</p>
+			<h2>Search Attendees</h2>
+			<p>Search an attendee by name to find the events to which they've RSVPed:</p>
 			<div class="body">
 				<div class="events-container">
 					<form action="">

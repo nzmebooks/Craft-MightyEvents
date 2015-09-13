@@ -18,7 +18,15 @@ class MightyEventsVariable
 
 	public function getEvents()
 	{
-		return craft()->mightyEvents_events->getEvents();
+		$query = craft()->mightyEvents_events->getEvents();
+
+		foreach ($query as &$row) {
+			foreach ($row as $key => &$value) {
+				$row[$key] = html_entity_decode($value, ENT_QUOTES);
+			}
+		}
+
+		return $query;
 	}
 
 	public function getPlugin()
