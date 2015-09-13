@@ -13,7 +13,8 @@ class MightyEvents_EventsRecord extends BaseRecord
 	{
 		$attributes = array(
 			'name' => AttributeType::String,
-			'date' => AttributeType::Number,
+			'date' => AttributeType::String,
+			'max_seats' => AttributeType::String
 		);
 
 		return $attributes;

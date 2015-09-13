@@ -1,0 +1,148 @@
+{% extends "_layouts/cp" %}
+
+{% set title = craft.mightyEvents.getPluginName ~ ": Create an Event" %}
+
+{% set attendees = craft.mightyEvents.getAttendees %}
+{% set events = craft.mightyEvents.getEvents %}
+
+{% set tabs = craft.mightyEvents.getCpTabs %}
+
+{% set selectedTab = 'create_event' %}
+
+{% set content %}
+
+<div class="grid">
+	<div class="item" data-colspan="2">
+		<div class="widget pane">
+			<h2>Create an Event</h2>
+			<div class="body">
+				<div class="attendees-container">
+					<form method="post" action="">
+						<input type="hidden" name="action" value="mightyEvents/event/SaveEvent">
+						<div class="field first">
+							<div class="heading">
+								<label class="required" for="event_name">Event Name</label>
+							</div>
+							<input class="text fullwidth" type="text" name="event_name" value="Sample Event Title" autofocus="" autocomplete="off">
+						</div>
+						<div class="field">
+							<div class="heading">
+								<label class="required" for="max_seats">Maximium Seating</label>
+								<div class="instructions">
+									<p>The maximum amount of seating that will be available at the event.</p>
+								</div><!-- Instructions -->
+							</div>
+							<input class="text fullwidth" type="text" name="max_seats" value="125" autofocus="" autocomplete="off">
+						</div>
+						<div class="field">
+							<div class="heading">
+								<label for="event_date">Event Date</label>
+								<div class="instructions">
+									<p>The date that the event will take place.</p>
+								</div>
+							</div>
+							<div class="datewrapper">
+								{% from "_includes/forms" import date %}
+								{{ date({
+								    name: 'event_date',
+								    value: value.trial_end
+								}) }}
+							</div>
+						</div>
+						<div class="field">
+							<div class="heading">
+								<label class="required" for="event_text">Event Snippet</label>
+								<div class="instructions">
+									<p>Write a small snippet of information about the event here.</p>
+								</div><!-- Instructions -->
+								<textarea id="event_content" name="event_content"></textarea>
+							</div><!-- Heading -->
+						</div><!-- Field -->
+						<input type="submit" value="Create Event" class="btn submit icon">
+					</form>
+				</div><!-- Attendees Container -->
+			</div><!-- Body -->
+		</div><!-- Widget -->
+	</div><!-- Item -->
+	<div class="item" data-colspan="1">
+		<div class="widget pane">
+			<h2>Events</h2>
+			<div class="body">
+				<div class="events-container">
+					{% if events %}
+					<table id="test" class="data fullwidth">
+						<thead>
+							<th>Name</th>
+							<th>Current Attendance</th>
+							<th>Seats Available</th>
+							<th>Date</th>
+						</thead>
+						<tbody>
+							{% for event in events %}
+							<tr>
+								<td>{{ event.name }}</td>
+								<td>{{ event.current_attendance }}</td>
+								<td>{{ event.max_seats }}</td>
+								<td>{{ event.date }}</td>
+							</tr>
+							{% endfor %}
+						</tbody>
+					</table>
+					{% else %}
+					<p>It looks like you haven't setup an event.</p>
+					<div class="buttons">
+		                <a href="{{ url('mightyevents/add_event') }}" class="btn submit add icon">{{ "Add an Event" | t }}</a>
+		            </div>
+					{% endif %}
+				</div><!-- Attendees Container -->
+			</div><!-- Body -->
+		</div><!-- Widget -->
+		<div class="widget pane">
+			<h2>Search Members</h2>
+			<p>Search a member by name to find the events they're attending:</p>
+			<div class="body">
+				<div class="events-container">
+					<form action="">
+					<input type="text" class="fullwidth">
+					<div class="buttons">
+		                <a href="{{ url('mightyevents/add_event') }}" class="btn submit search icon">{{ "Search" | t }}</a>
+		            </div>
+					</form>
+				</div><!-- Attendees Container -->
+			</div><!-- Body -->
+		</div><!-- Widget -->
+	</div><!-- Item -->
+</div><!-- Grid -->
+
+<div id="plugin-footer">
+	<div class="footer-right">
+	    <div class="plugin-credit">
+	        <p>{{ craft.mightyEvents.getPluginName }} &bull; Version {{ craft.mightyEvents.getPluginVersion }} &bull; <a href="{{ craft.mightyEvents.getPluginUrl }}" target="_blank">Help</a></p>
+	    </div>
+	</div>
+</div>
+
+
+{% endset %}
+
+{% set js %}
+    new Craft.AdminTable({
+        tableSelector: '#test',
+        noObjectsSelector: '#noresult',
+        deleteAction: ''
+    });
+
+    var $datePicker = $('#{{ id|namespaceInputId|e('js') }}');
+	$datePicker.datepicker({
+		constrainInput: false,
+		dateFormat: '{{ craft.i18n.datepickerJsFormat }}',
+		defaultDate: new Date({% if value %}{{ value.year }}, {{ value.month-1 }}, {{ value.day }}{% endif %}),
+		prevText:   '{{ "Prev"|t|e('js') }}',
+		nextText:   '{{ "Next"|t|e('js') }}',
+		firstDay:   {{ currentUser.weekStartDay }},
+	});
+
+{% endset %}
+{% includeJsResource "lib/redactor/redactor.js" %}
+{% includeCssResource "lib/redactor/redactor.css" %}
+{% includeJs "$('#event_content').redactor();" %}

@@ -1,13 +1,9 @@
 {% extends "_layouts/cp" %}
 
-{% set title = "Mighty Events" %}
+{% set title = craft.mightyEvents.getPluginName %}
 {% set attendees = craft.mightyEvents.getAttendees %}
 
-{% set tabs = {
-    home: { label: "Home"|t, url: url('mightyevents') },
-    manage_events: { label: "Manage Events"|t, url: url('mightyevents/manage_events') },
-    add_event: { label: "Create a New Event"|t, url: url('mightyevents/add_event') },
-} %}
+{% set tabs = craft.mightyEvents.getCpTabs %}
 
 {% set content %}
 
@@ -74,7 +70,7 @@
 					{% else %}
 					<p>It looks like you haven't setup an event.</p>
 					<div class="buttons">
-		                <a href="{{ url('mightyevents/add_event') }}" class="btn submit add icon">{{ "Add an Event" | t }}</a>
+		                <a href="{{ url('mightyevents/create-event') }}" class="btn submit add icon">{{ "Add an Event" | t }}</a>
 		            </div>
 					{% endif %}
 				</div><!-- Attendees Container -->
@@ -88,7 +84,7 @@
 					<form action="">
 					<input type="text" class="fullwidth">
 					<div class="buttons">
-		                <a href="{{ url('mightyevents/add_event') }}" class="btn submit icon">{{ "Search" | t }}</a>
+		                <a href="{{ url('mightyevents/add_event') }}" class="btn submit search icon">{{ "Search" | t }}</a>
 		            </div>
 					</form>
 				</div><!-- Attendees Container -->

@@ -42,4 +42,26 @@ class MightyEventsPlugin extends BasePlugin
     {
         return true;
     }
+
+    public function getCpTabs()
+    {
+        $tabs = array();
+
+        $tabs['home'] = array(
+            'label' => Craft::t('Home'),
+            'url' => UrlHelper::getUrl('mightyevents'),
+        );
+
+        $tabs['manage_events'] = array(
+            'label' => Craft::t('Manage Events'),
+            'url' => UrlHelper::getUrl('mightyevents/manage-events'),
+        );
+
+        $tabs['create_event'] = array(
+            'label' => Craft::t('Create an Event'),
+            'url' => UrlHelper::getUrl('mightyevents/create-event'),
+        );
+
+        return $tabs;
+    }
 }
