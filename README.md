@@ -15,6 +15,7 @@ The module is very-much in an alpha stage. Indeed, it even has placeholder text 
 - Allow attendees to update their RSVP, if logged in
 - Attendee notifications about event information
 - Accept payments for event attendance
+- Export attendance data to CSV, PDF, etc.
 
 ## Usage
 
