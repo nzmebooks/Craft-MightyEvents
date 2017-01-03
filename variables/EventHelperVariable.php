@@ -2,7 +2,7 @@
 
 namespace Craft;
 
-class MightyEventsVariable
+class EventHelperVariable
 {
 	/**
 	 * Provides the CP with the necessary variables to access the database.
@@ -13,12 +13,23 @@ class MightyEventsVariable
 	 */
 	public function getAttendees()
 	{
-		return craft()->mightyEvents_attendees->getAttendees();
+		return craft()->eventHelper_attendees->getAttendees();
+	}
+
+	/**
+	 * Returns a boolean indicating whether a supplied event is attended by a supplied user.
+	 *
+	 * @method isAttended
+	 * @return Boolean
+	 */
+	public function isAttended($eventId, $userId)
+	{
+		return craft()->eventHelper_attendees->isAttended($eventId, $userId);
 	}
 
 	public function getEvents()
 	{
-		$query = craft()->mightyEvents_events->getEvents();
+		$query = craft()->eventHelper_events->getEvents();
 
 		foreach ($query as &$row) {
 			foreach ($row as $key => &$value) {
@@ -31,7 +42,7 @@ class MightyEventsVariable
 
 	public function getPlugin()
 	{
-		return craft()->plugins->getPlugin('mightyEvents');
+		return craft()->plugins->getPlugin('eventHelper');
 	}
 
 	public function getPluginName()

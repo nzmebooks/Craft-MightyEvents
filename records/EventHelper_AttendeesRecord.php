@@ -2,11 +2,11 @@
 
 namespace Craft;
 
-class MightyEvents_AttendeesRecord extends BaseRecord
+class EventHelper_AttendeesRecord extends BaseRecord
 {
 	public function getTableName()
 	{
-		return "mightyevents_attendees";
+		return "eventhelperattendees";
 	}
 
 	// A good way to see possible fields that can be used here is to print_r an
@@ -14,6 +14,10 @@ class MightyEvents_AttendeesRecord extends BaseRecord
 	protected function defineAttributes()
 	{
 		$attributes = array(
+			'userId' => array(
+				'type' => AttributeType::Number,
+				'required' => true
+			),
 			'name' => array(
 				'type' => AttributeType::String,
 				'required' => true
@@ -22,7 +26,7 @@ class MightyEvents_AttendeesRecord extends BaseRecord
 				'type' => AttributeType::Email,
 				'required' => true
 			),
-			'event_id' => array(
+			'eventId' => array(
 				'type' => AttributeType::Number,
 				'required' => true
 			),

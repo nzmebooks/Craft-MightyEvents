@@ -1,102 +1,96 @@
 {% extends "_layouts/cp" %}
 
-{% set title = craft.mightyEvents.getPluginName %}
+{% includeCssResource 'eventhelper/css/eventhelper.css' %}
+{% includeJsResource 'eventhelper/js/eventhelper.js' %}
 
-{% set attendees = craft.mightyEvents.getAttendees %}
-{% set events = craft.mightyEvents.getEvents %}
+{% set title = craft.eventHelper.getPluginName %}
 
-{% set tabs = craft.mightyEvents.getCpTabs %}
+{% set attendees = craft.eventHelper.getAttendees %}
+{% set events = craft.eventHelper.getEvents %}
+
+{% set tabs = craft.eventHelper.getCpTabs %}
 
 {% set content %}
 
 <div class="grid">
-	<div class="item" data-colspan="2">
-		<div class="widget pane">
-			<h2>Recent Attendees</h2>
-			<div class="body">
-				<div class="attendees-container">
-					{% if attendees %}
-					<table id="test" class="data fullwidth">
-						<thead>
-							<th>ID</th>
-							<th>Name</th>
-							<th>Email Address</th>
-							<th>Event</th>
-							<th>Signup Date</th>
-							<th>Seats</th>
-						</thead>
-						<tbody>
-							{% for attendee in attendees|slice(0, 20) %}
-							<tr>
-								<td>{{ attendee.id }}</td>
-								<td>{{ attendee.name }}</td>
-								<td>{{ attendee.email }}</td>
-								<td>{{ attendee.event_id }}</td>
-								<td>{{ attendee.dateCreated }}</td>
-								<td>{{ attendee.seats }}</td>
-							</tr>
-							{% endfor %}
-						</tbody>
-					</table>
-					{% else %}
-					<p>It looks like there aren't any RSVPs for an event.</p>
-					{% endif %}
-				</div><!-- Attendees Container -->
-			</div><!-- Body -->
-		</div><!-- Widget -->
-	</div><!-- Item -->
-	<div class="item" data-colspan="1">
-		<div class="widget pane">
-			<h2>Events</h2>
-			<div class="body">
-				<div class="events-container">
-					{% if events %}
-					<table id="test" class="data fullwidth">
-						<thead>
-							<th>Name</th>
-							<th class="thin">Count</th>
-						</thead>
-						<tbody>
-							{% for event in events %}
-							<tr>
-								<td>{{ event.name }}</td>
-								<td class="thin">{{ event.attendance }}</td>
-							</tr>
-							{% endfor %}
-						</tbody>
-					</table>
-					{% else %}
-					<p>It looks like you haven't setup an event.</p>
-					<div class="buttons">
-		                <a href="{{ url('mightyevents/create-event') }}" class="btn submit add icon">{{ "Add an Event" | t }}</a>
-		            </div>
-					{% endif %}
-				</div><!-- Attendees Container -->
-			</div><!-- Body -->
-		</div><!-- Widget -->
-		<div class="widget pane">
-			<h2>Search Attendees</h2>
-			<p>Search an attendee by name to find the events to which they've RSVPed:</p>
-			<div class="body">
-				<div class="events-container">
-					<form action="">
-					<input type="text" class="fullwidth">
-					<div class="buttons">
-		                <a href="{{ url('mightyevents/add_event') }}" class="btn submit search icon">{{ "Search" | t }}</a>
-		            </div>
-					</form>
-				</div><!-- Attendees Container -->
-			</div><!-- Body -->
-		</div><!-- Widget -->
-	</div><!-- Item -->
+    <div class="item" data-colspan="2">
+        <div class="widget pane">
+            <h2>RSVPs for upcoming events</h2>
+            <div class="body">
+                <div class="attendees-container">
+                    {% if attendees %}
+                    <table id="test" class="data fullwidth">
+                        <thead>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Email Address</th>
+                            <th>Event</th>
+                            <th>RSVP Date</th>
+                            <th>Seats</th>
+                        </thead>
+                        <tbody>
+                            {% for attendee in attendees|slice(0, 500) %}
+                            <tr>
+                                <td>{{ attendee.id }}</td>
+                                <td><a href="/admin/users/{{ attendee.userId }}">{{ attendee.name }}</a></td>
+                                <td>{{ attendee.email }}</td>
+                                <td><a href="/admin/entries/events/{{ attendee.eventId }}">{{ attendee.title }}</a></td>
+                                <td>{{ attendee.dateCreated }}</td>
+                                <td>{{ attendee.seats }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    {% else %}
+                    <p>It looks like there aren't any RSVPs for any events yet.</p>
+                    {% endif %}
+                </div><!-- Attendees Container -->
+
+                <form method="post" action="" class="centered" accept-charset="utf-8">
+                    {{ getCsrfInput() }}
+                    <input type="hidden" name="action" value="eventHelper/attendee/download">
+                    <input type="submit" class="btn submit js-btn-export" value="{{ 'Export'|t }}">
+                    <div class="spinner js-export-spinner hidden"></div>
+                </form>
+
+            </div><!-- Body -->
+        </div><!-- Widget -->
+    </div><!-- Item -->
+    <div class="item" data-colspan="1">
+        <div class="widget pane">
+            <h2>Upcoming events</h2>
+            <div class="body">
+                <div class="events-container">
+                    {% if events %}
+                    <table id="test" class="data fullwidth">
+                        <thead>
+                            <th>Name</th>
+                            <th class="thin">RSVPed</th>
+                        </thead>
+                        <tbody>
+                            {% for event in events %}
+                            <tr>
+                                <td><a href="/admin/entries/events/{{ event.id }}">{{ event.title }}</a></td>
+                                <td class="thin">{{ event.attendance }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    {% else %}
+                    <p>It looks like there are no upcoming events.</p>
+                    {% endif %}
+                </div><!-- Attendees Container -->
+            </div><!-- Body -->
+        </div><!-- Widget -->
+    </div><!-- Item -->
 </div><!-- Grid -->
 
 <div id="plugin-footer">
-	<div class="footer-right">
-	    <div class="plugin-credit">
-	        <p>{{ craft.mightyEvents.getPluginName }} &bull; Version {{ craft.mightyEvents.getPluginVersion }} &bull; <a href="{{ craft.mightyEvents.getPluginUrl }}" target="_blank">Help</a></p>
-	    </div>
-	</div>
+    <div class="footer-right">
+        <div class="plugin-credit">
+            <p>{{ craft.eventHelper.getPluginName }} &bull; Version {{ craft.eventHelper.getPluginVersion }}</p>
+        </div>
+    </div>
 </div>
 
 
